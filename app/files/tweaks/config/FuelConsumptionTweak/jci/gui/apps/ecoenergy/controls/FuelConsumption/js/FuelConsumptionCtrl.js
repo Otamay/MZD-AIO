@@ -2318,7 +2318,7 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
           }
           else
           {
-            this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficienc + "</br></br></br>0.0";
+            this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficiency + "</br></br></br>0.0";
           }
           this.fuelEfficiencyUnit.innerHTML = fuelEfficiencyUnitText + "</br></br></br>" + newFuelEfficiencyUnitText;
           // **** End of the fuel efficiency tweak
