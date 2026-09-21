@@ -2,6 +2,20 @@ backup_org /jci/gui/apps/syssettings/js/syssettingsApp.js
 # Enable WIFI
 log_message "==========**************** START ENABLE WIFI ... *************==========="
 
+if [ $CMU_VER -eq 74 ]; then
+    WIFI_STRING_TO_REPLACE="^[[:space:]]\+((false === this._supportedWirelessCarPlay) && ((region != framework.localize.REGIONS\['NorthAmerica'\]) && (region != framework.localize.REGIONS\['Japan'\]))))[[:space:]]*$"
+    LN=$(grep -n "${WIFI_STRING_TO_REPLACE}" /jci/gui/apps/syssettings/js/syssettingsApp.js | cut -d":" -f1)
+    if [ ! -z "${LN}" ]; then
+	cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-before.js"
+	log_message "===              Found wifi validation on line ${LN}                   ==="
+	sed -i "${LN}s/^\([[:space:]]*\).*/\1(true))/" /jci/gui/apps/syssettings/js/syssettingsApp.js
+	log_message "===                      Wifi for NA enabled                          ==="
+	show_message "=== Wifi enabled ==="
+    else
+	log_message "===               ERROR: Line For Wifi Fix Not Found                  ==="
+    fi
+    cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-after.js"
+else
 if grep -Fq "(framework.localize.REGIONS['NorthAmerica'])" /jci/gui/apps/syssettings/js/syssettingsApp.js
 then
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-before.js"
@@ -18,6 +32,7 @@ then
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-after.js"
 else
   log_message "===                       Wifi already active                         ==="
+fi
 fi
 
 log_message "===============************* END ENABLE WIFI *************==============="
