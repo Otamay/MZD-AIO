@@ -104,7 +104,7 @@ compatibility_check()
     else
       echo 5 && return # 59.00.502+ is another level because it is not compatible with USB Audio Mod
     fi
-  elif [ $_VER -eq 70 ]
+  elif [ $_VER -eq 70 -o $_VER -eq 74 ]
   then
     if [ $_VER_EXT -le 360 ]
     then
